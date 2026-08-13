@@ -1,13 +1,7 @@
-import { useState } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
 import { router } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, radius, spacing, typography } from '@/theme';
 
 type Goal = {
@@ -45,24 +39,21 @@ const goals: Goal[] = [
 ];
 
 export default function GoalOnboarding() {
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+  const { data, setGoals } = useOnboarding();
 
   const toggleGoal = (goalId: string) => {
-    setSelectedGoals((currentGoals) => {
-      if (currentGoals.includes(goalId)) {
-        return currentGoals.filter((id) => id !== goalId);
-      }
-
-      return [...currentGoals, goalId];
-    });
-  };
-
-  const handleContinue = () => {
-    if (selectedGoals.length === 0) {
+    if (data.goals.includes(goalId)) {
+      setGoals(data.goals.filter((id) => id !== goalId));
       return;
     }
 
-    console.log('Selected goals:', selectedGoals);
+    setGoals([...data.goals, goalId]);
+  };
+
+  const handleContinue = () => {
+    if (data.goals.length === 0) {
+      return;
+    }
 
     router.push('/onboarding/bestie');
   };
@@ -77,9 +68,7 @@ export default function GoalOnboarding() {
         <View style={styles.header}>
           <Text style={styles.emoji}>🌱</Text>
 
-          <Text style={styles.title}>
-            What brings you here?
-          </Text>
+          <Text style={styles.title}>What brings you here?</Text>
 
           <Text style={styles.subtitle}>
             Pick one or more goals that feel right for you.
@@ -88,7 +77,7 @@ export default function GoalOnboarding() {
 
         <View style={styles.options}>
           {goals.map((goal) => {
-            const isSelected = selectedGoals.includes(goal.id);
+            const isSelected = data.goals.includes(goal.id);
 
             return (
               <Pressable
@@ -126,9 +115,7 @@ export default function GoalOnboarding() {
                     styles.checkCircle,
                     isSelected && styles.checkCircleSelected,
                   ]}>
-                  {isSelected && (
-                    <Text style={styles.checkIcon}>✓</Text>
-                  )}
+                  {isSelected && <Text style={styles.checkIcon}>✓</Text>}
                 </View>
               </Pressable>
             );
@@ -137,12 +124,12 @@ export default function GoalOnboarding() {
       </ScrollView>
 
       <Pressable
-        disabled={selectedGoals.length === 0}
+        disabled={data.goals.length === 0}
         onPress={handleContinue}
         style={({ pressed }) => [
           styles.button,
-          selectedGoals.length === 0 && styles.buttonDisabled,
-          pressed && selectedGoals.length > 0 && styles.buttonPressed,
+          data.goals.length === 0 && styles.buttonDisabled,
+          pressed && data.goals.length > 0 && styles.buttonPressed,
         ]}>
         <Text style={styles.buttonText}>Continue</Text>
         <Text style={styles.buttonIcon}>→</Text>

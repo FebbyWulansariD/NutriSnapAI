@@ -1,15 +1,8 @@
-import { useState } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
 import { router } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { BestieCard } from '@/components/bestie/BestieCard';
+import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, radius, spacing, typography } from '@/theme';
 
 type Bestie = {
@@ -41,16 +34,15 @@ const besties: Bestie[] = [
 ];
 
 export default function BestieOnboarding() {
-  const [selectedBestie, setSelectedBestie] = useState<string | null>(null);
+  const { data, setBestie } = useOnboarding();
 
   const handleContinue = () => {
-    if (!selectedBestie) {
+    if (!data.bestie) {
       return;
     }
 
-    console.log('Selected bestie:', selectedBestie);
+    console.log('Completed onboarding:', data);
 
-    // Untuk sementara kita kembali ke Home.
     router.replace('/(tabs)');
   };
 
@@ -64,9 +56,7 @@ export default function BestieOnboarding() {
         <View style={styles.header}>
           <Text style={styles.emoji}>💗</Text>
 
-          <Text style={styles.title}>
-            Choose your Bestie
-          </Text>
+          <Text style={styles.title}>Choose your Bestie</Text>
 
           <Text style={styles.subtitle}>
             Pick a little companion to join you on your nutrition journey.
@@ -80,20 +70,20 @@ export default function BestieOnboarding() {
               emoji={bestie.emoji}
               name={bestie.name}
               description={bestie.description}
-              selected={selectedBestie === bestie.id}
-              onPress={() => setSelectedBestie(bestie.id)}
+              selected={data.bestie === bestie.id}
+              onPress={() => setBestie(bestie.id)}
             />
           ))}
         </View>
       </ScrollView>
 
       <Pressable
-        disabled={!selectedBestie}
+        disabled={!data.bestie}
         onPress={handleContinue}
         style={({ pressed }) => [
           styles.button,
-          !selectedBestie && styles.buttonDisabled,
-          pressed && selectedBestie && styles.buttonPressed,
+          !data.bestie && styles.buttonDisabled,
+          pressed && data.bestie && styles.buttonPressed,
         ]}>
         <Text style={styles.buttonText}>Meet My Bestie</Text>
         <Text style={styles.buttonIcon}>→</Text>

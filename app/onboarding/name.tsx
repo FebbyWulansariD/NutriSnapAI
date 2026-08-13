@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, radius, spacing, typography } from '@/theme';
 
 export default function NameOnboarding() {
-  const [name, setName] = useState('');
+  const { data, setName } = useOnboarding();
+
+  const handleContinue = () => {
+    if (!data.name.trim()) {
+      return;
+    }
+
+    router.push('/onboarding/goal');
+  };
 
   return (
     <View style={styles.container}>
@@ -20,21 +23,20 @@ export default function NameOnboarding() {
       <View style={styles.content}>
         <Text style={styles.emoji}>👋</Text>
 
-        <Text style={styles.title}>
-          Let's get to know you!
-        </Text>
+        <Text style={styles.title}>Let's get to know you!</Text>
 
         <Text style={styles.subtitle}>
           What should your Bestie call you?
         </Text>
 
         <TextInput
-          value={name}
+          value={data.name}
           onChangeText={setName}
           placeholder="Your name"
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
           autoCapitalize="words"
+          autoCorrect={false}
         />
       </View>
 
@@ -43,13 +45,7 @@ export default function NameOnboarding() {
           styles.button,
           pressed && styles.buttonPressed,
         ]}
-        onPress={() => {
-          if (!name.trim()) {
-            return;
-          }
-
-          router.push('/onboarding/goal');
-        }}>
+        onPress={handleContinue}>
         <Text style={styles.buttonText}>Continue</Text>
         <Text style={styles.buttonIcon}>→</Text>
       </Pressable>
