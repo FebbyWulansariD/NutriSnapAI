@@ -43,7 +43,7 @@ export default function BestieOnboarding() {
 
     console.log('Completed onboarding:', data);
 
-    router.replace('/(tabs)');
+    router.replace('/auth/register');
   };
 
   return (
