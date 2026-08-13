@@ -1,4 +1,11 @@
 export const typography = {
+  fontFamily: {
+    regular: 'Poppins-Regular',
+    medium: 'Poppins-Medium',
+    semibold: 'Poppins-SemiBold',
+    bold: 'Poppins-Bold',
+  },
+
   fontSize: {
     xs: 12,
     sm: 14,
