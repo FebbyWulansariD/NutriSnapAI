@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import {
   Pressable,
   StyleSheet,
@@ -43,7 +44,11 @@ export default function NameOnboarding() {
           pressed && styles.buttonPressed,
         ]}
         onPress={() => {
-          console.log('Name:', name);
+          if (!name.trim()) {
+            return;
+          }
+
+          router.push('/onboarding/goal');
         }}>
         <Text style={styles.buttonText}>Continue</Text>
         <Text style={styles.buttonIcon}>→</Text>
