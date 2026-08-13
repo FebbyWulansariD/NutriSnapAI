@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { router } from 'expo-router';
 import {
   Animated,
   Easing,
@@ -87,7 +88,7 @@ export default function WelcomeScreen() {
             pressed && styles.buttonPressed,
           ]}
           onPress={() => {
-            console.log('Get Started pressed');
+            router.push('/onboarding/name');
           }}>
           <Text style={styles.buttonText}>Let&apos;s Get Started</Text>
           <Text style={styles.buttonIcon}>→</Text>
