@@ -20,7 +20,7 @@ export function BestieGreeting({
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.label}>Your Bestie</Text>
+        <Text style={styles.label}>Meet {name} 💗</Text>
 
         <Text style={styles.name}>{name}</Text>
 

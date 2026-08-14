@@ -7,14 +7,29 @@ type GreetingHeaderProps = {
   onNotificationPress: () => void;
 };
 
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) {
+    return 'Good morning';
+  }
+
+  if (hour >= 12 && hour < 18) {
+    return 'Good afternoon';
+  }
+
+  return 'Good evening';
+}
+
 export function GreetingHeader({
   name,
   onNotificationPress,
 }: GreetingHeaderProps) {
+    const greeting = getGreeting();
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.greeting}>Good morning, {name} 💗</Text>
+        <Text style={styles.greeting}>{greeting}, {name} 💗</Text>
 
         <Text style={styles.subtitle}>
           Ready to take care of yourself today?

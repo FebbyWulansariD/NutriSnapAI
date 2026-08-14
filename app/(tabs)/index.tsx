@@ -9,9 +9,13 @@ import { WaterProgress } from '@/components/home/WaterProgress';
 import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, spacing, typography } from '@/theme';
 import { TodaysMeals } from '@/components/home/TodaysMeals';
+import { besties } from '@/constants/besties';
 
 export default function HomeScreen() {
   const { data } = useOnboarding();
+  const selectedBestie =
+    besties.find((bestie) => bestie.id === data.bestie) ??
+    besties[0];
 
   const displayName = data.name || 'Bestie';
 
@@ -28,8 +32,8 @@ export default function HomeScreen() {
       />
 
       <BestieGreeting
-        name={data.bestie || 'Pinkie'}
-        emoji="🎀"
+        name={selectedBestie.name}
+        emoji={selectedBestie.emoji}
         message="Ready to check what you eat today?"
       />
 

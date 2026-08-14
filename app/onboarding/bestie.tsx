@@ -2,36 +2,10 @@ import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { BestieCard } from '@/components/bestie/BestieCard';
+import { besties } from '@/constants/besties';
 import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, radius, spacing, typography } from '@/theme';
 
-type Bestie = {
-  id: string;
-  emoji: string;
-  name: string;
-  description: string;
-};
-
-const besties: Bestie[] = [
-  {
-    id: 'pinkie',
-    emoji: '🎀',
-    name: 'Pinkie',
-    description: 'Cheerful, sweet, and always ready to support you.',
-  },
-  {
-    id: 'cozzy',
-    emoji: '🐻',
-    name: 'Cozzy',
-    description: 'Calm, caring, and great for gentle encouragement.',
-  },
-  {
-    id: 'bunni',
-    emoji: '🐰',
-    name: 'Bunni',
-    description: 'Playful, energetic, and loves celebrating small wins.',
-  },
-];
 
 export default function BestieOnboarding() {
   const { data, setBestie } = useOnboarding();
