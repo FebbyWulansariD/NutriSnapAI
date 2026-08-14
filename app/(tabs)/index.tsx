@@ -10,6 +10,7 @@ import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, spacing, typography } from '@/theme';
 import { TodaysMeals } from '@/components/home/TodaysMeals';
 import { besties } from '@/constants/besties';
+import { todaysMeals } from '@/constants/meals';
 
 export default function HomeScreen() {
   const { data } = useOnboarding();
@@ -19,6 +20,10 @@ export default function HomeScreen() {
 
   const displayName = data.name || 'Bestie';
 
+  const consumedCalories = todaysMeals.reduce(
+    (total, meal) => total + meal.nutrition.calories,
+    0
+  );
   return (
     <ScrollView
       style={styles.container}
@@ -38,7 +43,7 @@ export default function HomeScreen() {
       />
 
       <NutritionSummary
-        consumedCalories={820}
+        consumedCalories={consumedCalories}
         targetCalories={1800}
       />
 

@@ -1,22 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import type { Meal } from '@/types/meal';
 import { colors, radius, spacing, typography } from '@/theme';
 
 type MealCardProps = {
-  emoji: string;
-  name: string;
-  mealType: string;
-  time: string;
-  calories: number;
+  meal: Meal;
   onPress?: () => void;
 };
 
 export function MealCard({
-  emoji,
-  name,
-  mealType,
-  time,
-  calories,
+  meal,
   onPress,
 }: MealCardProps) {
   return (
@@ -27,21 +20,23 @@ export function MealCard({
         pressed && styles.pressed,
       ]}>
       <View style={styles.imageContainer}>
-        <Text style={styles.emoji}>{emoji}</Text>
+        <Text style={styles.emoji}>{meal.emoji}</Text>
       </View>
 
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
-          {name}
+          {meal.name}
         </Text>
 
         <Text style={styles.meta}>
-          {mealType} · {time}
+          {meal.mealType} · {meal.time}
         </Text>
       </View>
 
       <View style={styles.calorieContainer}>
-        <Text style={styles.calories}>{calories}</Text>
+        <Text style={styles.calories}>
+          {meal.nutrition.calories}
+        </Text>
 
         <Text style={styles.kcal}>kcal</Text>
       </View>
