@@ -8,6 +8,7 @@ import { QuickActions } from '@/components/home/QuickActions';
 import { WaterProgress } from '@/components/home/WaterProgress';
 import { useOnboarding } from '@/contexts/onboarding-context';
 import { colors, spacing, typography } from '@/theme';
+import { TodaysMeals } from '@/components/home/TodaysMeals';
 
 export default function HomeScreen() {
   const { data } = useOnboarding();
@@ -46,11 +47,7 @@ export default function HomeScreen() {
         }}
       />
 
-      <Text style={styles.sectionTitle}>Today&apos;s Meals</Text>
-
-      <Text style={styles.placeholderText}>
-        Your meals will appear here once you start tracking them. 🍽️
-      </Text>
+      <TodaysMeals />
 
       <WaterProgress
         glasses={4}
@@ -70,20 +67,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.xxl,
     paddingBottom: spacing.xxxl,
-  },
-
-  sectionTitle: {
-    color: colors.text,
-    fontFamily: typography.fontFamily.semibold,
-    fontSize: typography.fontSize.lg,
-    marginBottom: spacing.md,
-  },
-
-  placeholderText: {
-    color: colors.textSecondary,
-    fontFamily: typography.fontFamily.regular,
-    fontSize: typography.fontSize.sm,
-    lineHeight: 20,
-    marginBottom: spacing.xl,
   },
 });
